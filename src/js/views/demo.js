@@ -7,7 +7,9 @@ import "../../styles/demo.css";
 
 export const Demo = () => {
 	const { store, actions } = useContext(Context);
-
+	console.log(store.nombre);	
+	actions.changeName('Yamil')
+	console.log(store.nombre);
 	return (
 		<div className="container">
 			<ul className="list-group">

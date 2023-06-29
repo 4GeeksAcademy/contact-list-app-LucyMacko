@@ -11,11 +11,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 					title: "SECOND",
 					background: "white",
 					initial: "white"
-				}
-			]
+				},
+			],
+			agenda:''
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
+			changeName: (nuevoNombre) => {
+				setStore({nombre:nuevoNombre})
+			},
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
 			},
@@ -36,10 +40,22 @@ const getState = ({ getStore, getActions, setStore }) => {
 				});
 
 				//reset the global store
-				setStore({ demo: demo });
+				setStore({ 
+					...store,
+					demo: demo
+				});
+			},
+			changeAgenda: (newAgenda) => {
+
+				const store = getStore();
+
+				setStore({ 
+					...store,
+					agenda: newAgenda
+				})
 			}
 		}
 	};
 };
 
-export default getState;
+export default getState

@@ -1,0 +1,43 @@
+#newcontact{
+    margin-top:25px;
+}
+button{
+    margin-right: 65px;
+}
+h1{
+    text-align: center;
+}
+#contactcard{
+    margin-left:200px;
+    margin-right:200px;
+    border: 1px solid lightgrey;    
+}
+#info{
+    display: flex;
+    flex-direction: column;
+}
+i{
+    color:#a9aaad;       
+}
+p{
+    margin-bottom:8px;
+}
+img{
+    border-radius: 100px;    
+    margin-top:20px;
+    margin-left:10px;
+}
+ul{
+    margin-left:30px;
+    margin-top:7px;
+}
+#addDelete{
+    margin-top:7px;
+    padding:0;
+    padding:0.5rem;    
+}
+#pencil, #trash{
+    padding:15px;
+    cursor: pointer;
+    color: black;
+}
