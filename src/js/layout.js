@@ -3,10 +3,10 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 
 import Home from "./views/home";
-import { Single } from "./views/single";
 import injectContext from "./store/appContext";
 import AddContact from "./views/addcontact";
 import SingleContact from "./views/singlecontact";
+import NoPage from "./views/nopage";
 
 //create your first component
 const Layout = () => {
@@ -20,10 +20,9 @@ const Layout = () => {
 				<Routes>
 					<Route path="/" element={<Home />} />
 					<Route path="/home" element={<Home />} />
-					<Route path="/single-contact" element={<SingleContact />} />
-					<Route path="/single/:theid" element={<Single />} />					
+					<Route path="/contact/:id" element={<SingleContact />} />										
 					<Route path="/add-contact" element={<AddContact />} />
-					<Route path="*" element={<h1>Not found!</h1>} />
+					<Route path="*" element={<NoPage />} />
 				</Routes>				
 			</BrowserRouter>
 		</div>

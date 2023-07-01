@@ -5,24 +5,29 @@ import { Context } from "../store/appContext";
 
 const AddContact = () => {
 
-    const [fullName, setFullName] = useState("");
-    const [email,setEmail] = useState("");
-    const [phone,setPhone] = useState("");
-    const [address,setAddress] = useState("");
+    const [fullName, setFullName] = useState('');
+    const [email,setEmail] = useState('');
+    const [phone,setPhone] = useState('');
+    const [address,setAddress] = useState('');
+
     const {store, actions} = useContext(Context);
 
     const onSubmit = () => {
-        if ( fullName === '') alert ('Please enter your full name');
-        else if (!email.includes('@')) alert ('Please use the full email address');
-        else if (phone.length !== 13) alert ('Please enter your phone number with the corresponding international code, example: +421908699672');
-        else if (address === '') ('Please provide an address with a number');
-        else {
+        if ( fullName === '') {
+            alert ('Please enter your full name'); 
+        } else if (!email.includes('@') || email === '') {
+            alert ('Please use the full email address'); 
+        } else if (phone === '') {
+            alert ('Please enter your phone number');
+        } else if (address === '') {
+            alert ('Please provide an address with a number'); 
+        } else {
             const contact = {
                 "full_Name": fullName,
                 "email": email,
                 "agenda_slug": store.agenda,
-                "phone": phone,
-                "address": address
+                "address": address,
+                "phone": phone
             }
             fetch('https://assets.breatheco.de/apis/fake/contact/', {
 				method: "POST",
@@ -59,24 +64,24 @@ const AddContact = () => {
             <div className="text-center" id="titleNewContact">
                 <h1>Add a New Contact</h1>
             </div>
-            <div className="mb-12">
-                <label for="fullName" className="form-label"><strong>Full Name</strong></label>
+            <div className="col-12">
+                <label htmlFor="fullName" className="form-label"><strong>Full Name</strong></label>
                 <input type="text" value={fullName} onChange={(e)=> setFullName(e.target.value)} className="form-control" id="fullName" placeholder="" />
             </div>
-            <div className="mb-12">
-                <label for="email" className="form-label"><strong>Email</strong></label>
+            <div className="col-12">
+                <label htmlFor="email" className="form-label"><strong>Email</strong></label>
                 <input type="text" value={email} onChange={(e)=> setEmail(e.target.value)} className="form-control" id="email" placeholder="" />
             </div>
-            <div className="mb-12">
-                <label for="phone" className="form-label"><strong>Phone</strong></label>
+            <div className="col-12">
+                <label htmlFor="phone" className="form-label"><strong>Phone</strong></label>
                 <input type="text" value={phone} onChange={(e)=> setPhone(e.target.value)} className="form-control" id="phone" placeholder="" />
             </div>
-            <div className="mb-12">
-                <label for="address" className="form-label"><strong>Address</strong></label>
+            <div className="col-12">
+                <label htmlFor="address" className="form-label"><strong>Address</strong></label>
                 <input type="text" value={address} onChange={(e)=> setAddress(e.target.value)} className="form-control" id="address" placeholder="" />
             </div>
             <div className="d-grid">
-                <button className="btn btn-primary mb-12" onClick={onSubmit}>Save Your Info</button>
+                <button className="btn btn-primary mb-12 mt-4" onClick={onSubmit} >Save Your Info</button>
             </div>
             <Link to="/"> or get back to contacts</Link>
         </div>
