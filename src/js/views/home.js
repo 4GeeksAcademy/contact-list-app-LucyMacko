@@ -1,8 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import "../../styles/home.css";
-import { useNavigate } from "react-router";
+import { Navigate, useNavigate } from "react-router";
 import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
+
 
 const Home = () => {
 	const {store, actions} = useContext(Context);
@@ -48,13 +49,14 @@ const Home = () => {
 				"Content-Type": "application/json"
 			}
 		})
-		.then(resp => {
+		.then(resp => {			
 			console.log(resp.ok);
 			console.log(resp.status);
 			return resp.json();
 		})
 		.then(data => {
-			console.log(data);
+			alert ('You are deleting the user!!!')
+			console.log(data);			
 			fetchContacts();
 			alert('You have successfully deleted the contact');
 		})
@@ -72,35 +74,37 @@ const Home = () => {
 			return(
 				<li
 					key={index}
-					className="list-group-item d-flex justify-content-between"
-					>
-					<div className="d-flex justify-content-between">
-						<div>
-							<img src={profilePhoto}/>
+					className="list-group-item d-flex contact-item"
+					>						
+						<div className="profile-photo">						
+							<img className="fakePhoto"src={profilePhoto}/>								
 						</div>
-						<div className="info">
-							<div>
-								<Link to={'/contact/' + item.id}><h5>{item.full_name}</h5></Link>
+						
+						<div className="contact-info">
+							<div className="info">
+								<div>
+									<Link to={'/single-contact/' + item.id}><h5>{item.full_name}</h5></Link>
+								</div>
+								<div>
+									<i className="fas fa-map-marker"></i>
+									<p>{item.address}</p>
+								</div>
+								<div>
+									<i className="fas fa-phone"></i>
+									<p>{item.phone}</p>
+								</div>
+								<div> 
+									<i className="fas fa-envelope"></i>
+									<p>{item.email}</p>
+								</div>
 							</div>
-							<div>
-								<i className="fas fa-map-marker"></i>
-								<p>{item.address}</p>
-							</div>
-							<div>
-								<i className="fas fa-phone"></i>
-								<p>{item.phone}</p>
-							</div>
-							<div> 
-								<i className="fas fa-envelope"></i>
-								<p>{item.email}</p>
-							</div>
-						</div>	
-					</div>
-					<div className="icons">
-						<i className="fas fa-pencil-alt" onClick={() => navigate("/add-contact")}></i>
-						<i className="fas fa-trash" onClick={() => deleteContact(item.id, item.full_name)}></i>
-					</div>						
-				</li>				
+						</div>					
+						<div className="icons">
+							<i className="fas fa-pencil-alt" id="pencil" onClick={() => navigate("/contact-edit/" + item.id)}></i>
+							<i className="fas fa-trash" id="trash" onClick={() => deleteContact(item.id, item.full_name)}></i>							
+						</div>												
+				</li>
+								
 			)
 		})
 	}
@@ -113,11 +117,18 @@ const Home = () => {
 				</div>
 			</div>			
 			<div className="mainTitle">
-				<h1>Contact list</h1>				
+				<h1>Contact list</h1>
+				<div className="d-grid justify-content-center" id="logout">
+					{store.isLoggedIn ? 
+						<p>Welcome to the private view    <button onClick={()=> actions.logout()}>Log me out</button></p>
+						:
+						<Navigate to={"/login"} />
+					}
+				</div>				
 			</div>			
 			<ul className="list-group mt-4">
 				{showContacts()}
-			</ul>		
+			</ul>					
 		</div>
 	);
 }

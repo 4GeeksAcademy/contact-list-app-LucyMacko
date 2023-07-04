@@ -13,7 +13,8 @@ const getState = ({ getStore, setStore }) => {
 					initial: "white"
 				},
 			],
-			agenda:'4geeks_agenda'
+			agenda:'4geeks_agenda',
+			isLoggedIn: false
 		},
 		actions: {
 			changeAgenda: (newAgenda) => {
@@ -23,6 +24,12 @@ const getState = ({ getStore, setStore }) => {
 					...store,
 					agenda: newAgenda
 				})
+			},
+			login: function () {
+				setStore({ isLoggedIn: true})
+			},
+			logout: function () {
+				setStore({ isLoggedIn: false})
 			}
 		}
 	};

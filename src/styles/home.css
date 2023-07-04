@@ -5,18 +5,23 @@
 h1{
     text-align: center;
 }
+#logout{
+    margin-bottom:40px;
+}
 ul{
     margin-left: 300px;
-    margin-right:300px;
+    margin-right:300px;    
 }
-img{
-    border-radius: 100px;    
-    margin-top:30px;
+.profile-photo{
+    margin-right:30px;
     margin-left:30px;
-    display:inline;
 }
-.info{
-    margin-left: 40px;
+.fakePhoto{
+    border-radius: 100px;   
+}
+.contact-info{
+    flex-grow:1;
+    margin-left:60px;
 }
 h5{
     text-decoration: none;
@@ -31,7 +36,7 @@ p{
     display:inline;
     margin-left: 10px;
 }
-.fas fa-pencil-alt, .fas fa-trash{
+#pencil, #trash{
     color:black;
     padding:10px;
     margin-right: 25px;

@@ -1,17 +1,51 @@
-import React, { useContext , useState } from "react";
-import "../../styles/addcontact.css";
+import React, {useEffect, useState, useContext } from "react";
+import { useParams } from "react-router-dom";
+import "../../styles/contactedit.css";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 
-const AddContact = () => {
+const ContactEdit = () => {
+
+    const params = useParams();    
 
     const [fullName, setFullName] = useState('');
     const [email,setEmail] = useState('');
     const [phone,setPhone] = useState('');
-    const [address,setAddress] = useState('');
+    const [address,setAddress] = useState(''); 
+    const {store, actions} = useContext(Context);    
 
-    const {store, actions} = useContext(Context); 
+    useEffect(() => {
+        fetchSingleContact();
+    }, [])
 
+    const fetchSingleContact= () => {
+        fetch('https://assets.breatheco.de/apis/fake/contact/' + params.id, {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json"
+			}
+		})
+		.then(resp => {
+			console.log(resp.ok); // will be true if the response is successfull
+			console.log(resp.status); // the status code = 200 or code = 400 etc.
+			console.log(resp); // will try return the exact result as string
+			return resp.json(); // (returns promise) will try to parse the result as json as return a promise that you can .then for results
+		})
+		.then(data => {
+			//here is where your code should start after the fetch finishes
+			console.log(data); //this will print on the console the exact object received from the server
+            setFullName(data.full_name);
+            setEmail(data.email);
+            setPhone(data.phone);
+            setAddress(data.address);
+            
+		})
+		.catch(error => {
+			//error handling
+			console.log(error);
+    	});
+    }
+    
     const onSubmit = () => {
         if ( fullName === '') {
             alert ('Please enter your full name'); 
@@ -29,8 +63,8 @@ const AddContact = () => {
                 "address": address,
                 "phone": phone
             }
-            fetch('https://assets.breatheco.de/apis/fake/contact/', {
-				method: "POST",
+            fetch('https://assets.breatheco.de/apis/fake/contact/' + params.id, {
+				method: "PUT",
 				body: JSON.stringify(contact),
 				headers: {
 					"Content-Type": "application/json"
@@ -49,7 +83,7 @@ const AddContact = () => {
 				setEmail('');
 				setPhone('');
 				setAddress('');
-				alert('Successfully Added New Contact!')
+				alert('You have successfully updated the contact');
 			})
 			.catch(error => {
 				//error handling
@@ -57,9 +91,8 @@ const AddContact = () => {
 			});
 		}
 	}
-    
 
-    return (
+    return(
         <div className="container" id="newContact">
             <div className="text-center" id="titleNewContact">
                 <h1>Add a New Contact</h1>
@@ -81,11 +114,11 @@ const AddContact = () => {
                 <input type="text" value={address} onChange={(e)=> setAddress(e.target.value)} className="form-control" id="address" placeholder="" />
             </div>
             <div className="d-grid">
-                <button className="btn btn-primary mb-12 mt-4" onClick={onSubmit} >Save Your Info</button>
+                <button className="btn btn-primary mb-12 mt-4" onClick={onSubmit} > Update the Info</button>
             </div>
             <Link to="/"> or get back to contacts</Link>
         </div>
     )
 }
 
-export default AddContact
+export default ContactEdit

@@ -1,12 +1,13 @@
 import React, {useEffect, useState } from "react";
-import "../../styles/home.css";
 import { useParams } from "react-router-dom";
-import {Link} from "react-router-dom";
+import { useNavigate } from "react-router";
+import "../../styles/singlecontact.css";
 
 const SingleContact = () => {
+    const navigate = useNavigate();
     const params = useParams();
     const [contact, setContact] = useState();
-    const profilePhoto = "https://picsum.photos/id/129/100";
+    const profilePhoto = "https://picsum.photos/id/129/200/";
 
     useEffect(() => {
         fetchSingleContact();
@@ -39,50 +40,26 @@ const SingleContact = () => {
     
 
     return(
-        <div>
-			<div className="row align-items-start" id="contactcard">					  					
-                <div className="col-4" id="profilePic">
-                    <img src={profilePhoto}></img>
-                </div>
-            </div>			
-			<div className="mainTitle">
-				<h1>Single Contact: {contact.id}</h1>				
-			</div>
-            {contact ? (			
-			<li
-            key={index}
-            className="list-group-item d-flex justify-content-between"
-            >
-                <div className="d-flex justify-content-between">
-                    <div>
-                        <img src={profilePhoto}/>
-                    </div>
-                    <div className="info">
-                        <div>
-                            <h5>{item.full_name}</h5>
+        <div className="component">
+            <h1>Contact : {params.id}</h1>
+            {contact ? (
+                <div>
+                    <div className="card">
+                        <img src={profilePhoto} className="card-img-top" alt="two_people" />                    
+                        <div className="card-body">
+                            <h5 className="card-title"> {contact.full_name}</h5>
+                            <li><i className="fas fa-envelope"></i> {contact.email}</li>
+                            <li><i className="fas fa-phone"></i> {contact.phone}</li>
+                            <li><i className="fas fa-map-marker"></i> {contact.address}</li>
+                            <button className="btn btn-secondary" onClick={() => navigate("/")}>Go back home</button>
                         </div>
-                        <div>
-                            <i className="fas fa-map-marker"></i>
-                            <p>{item.address}</p>
-                        </div>
-                        <div>
-                            <i className="fas fa-phone"></i>
-                            <p>{item.phone}</p>
-                        </div>
-                        <div> 
-                            <i className="fas fa-envelope"></i>
-                            <p>{item.email}</p>
-                        </div>
-                    </div>	
-                </div>                						
-            </li>
-               
+                    </div>			
+                </div>           
             ) : (
                 <div className="spinner-border" role="status">
                     <span className="visually-hidden">Loading...</span>
                 </div>
-            )}
-            <Link to="/">Go back home</Link>			
+            )}            			
 		</div>
     )
 }
